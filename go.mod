@@ -1,4 +1,4 @@
-module davidbuzatu.com/datafy/mongo_service
+module github.com/DavidBuzatu-Marian/GoLang-Mongo-Service
 
 go 1.16
 
