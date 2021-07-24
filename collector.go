@@ -34,6 +34,7 @@ func ReadConfig() {
 }
 
 func ConnectToMongo() {
+	ReadConfig()
 	var err error
 	client, err = mongo.NewClient(options.Client().ApplyURI(config.MongoURI))
 	if err != nil {
