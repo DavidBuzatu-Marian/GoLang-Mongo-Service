@@ -1,4 +1,4 @@
-module github.com/DavidBuzatu-Marian/GoLang-Mongo-Service
+module github.com/DavidBuzatu-Marian/go_mongo
 
 go 1.16
 

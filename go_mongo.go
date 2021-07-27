@@ -1,4 +1,4 @@
-package collector
+package go_mongo
 
 import (
 	"context"
