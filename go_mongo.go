@@ -10,10 +10,6 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-type Config struct {
-	MongoURI string
-}
-
 var ctx context.Context
 
 func ConnectToMongo(mongoUri string) *mongo.Client {
