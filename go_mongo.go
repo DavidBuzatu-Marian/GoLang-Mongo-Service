@@ -32,24 +32,41 @@ func CollectBirthdays(client *mongo.Client) []bson.D {
 		log.Fatal(err)
 	}
 	defer query.Close(ctx)
-	people := getPeopleFromQuery(query)
+	people := getBsonDFromQuery(query)
 	return people
 }
 
-func getPeopleFromQuery(query *mongo.Cursor) []bson.D {
-	var people []bson.D
+func CollectEvents(client *mongo.Client) []bson.D {
+	collection := client.Database("myFirstDatabase").Collection("events")
+	query, err := getEventsFromCollection(collection)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer query.Close(ctx)
+	events := getBsonDFromQuery(query)
+	return events
+}
+
+// Get all events that were added the current day
+// Query this endpoint every day, maybe every hour?
+func getEventsFromCollection(collection *mongo.Collection) (*mongo.Cursor, error) {
+	return collection.Find(ctx, bson.M{"$date_added": bson.M{"$gte": time.Now()}})
+}
+
+func getBsonDFromQuery(query *mongo.Cursor) []bson.D {
+	var result []bson.D
 	for query.Next(ctx) {
-		var result bson.D
-		err := query.Decode(&result)
+		var curr bson.D
+		err := query.Decode(&curr)
 		if err != nil {
 			log.Fatal(err)
 		}
-		people = append(people, result)
+		result = append(result, curr)
 	}
 	if err := query.Err(); err != nil {
 		log.Fatal(err)
 	}
-	return people
+	return result
 }
 
 func getBirthdaysFromCollection(collection *mongo.Collection) (*mongo.Cursor, error) {
