@@ -50,7 +50,7 @@ func CollectEvents(client *mongo.Client) []bson.D {
 // Get all events that were added the current day
 // Query this endpoint every day, maybe every hour?
 func getEventsFromCollection(collection *mongo.Collection) (*mongo.Cursor, error) {
-	return collection.Find(ctx, bson.M{"date_added": bson.M{"$gte": time.Now()}})
+	return collection.Find(ctx, bson.M{"date_added": bson.M{"$gte": time.Now().Add(-time.Hour)}})
 }
 
 func getBsonDFromQuery(query *mongo.Cursor) []bson.D {
